@@ -58,7 +58,11 @@ def print_stats(stats: dict) -> None:
     """Print stats"""
     print("HANDLERS".ljust(30), "\t".join(ALL_LEVELS))
     for handler in sorted(stats.keys()):
-        print(handler.ljust(30)) # TODO: add logic to print statistics
+        metrics = []
+        for level in ALL_LEVELS:
+            metrics.append(str(stats[handler][level]))
+        print(handler.ljust(30), "\t".join(metrics))
+    # TODO: need doing TOTAL section
 
 
 def get_handler_stats(files: list[str]) -> None:
