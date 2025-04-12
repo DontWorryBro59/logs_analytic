@@ -18,7 +18,7 @@ def check_paths_exist(paths: list[str]) -> list[str]:
         if os.path.isfile(path):
             correct_paths.append(path)
         else:
-            print(f"Error: file {path} does not exist !")
+            print(f"[Warning!]: file {path} does not exist !")
     return correct_paths
 
 
