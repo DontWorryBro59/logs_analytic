@@ -1,6 +1,5 @@
-from multiprocessing import Pool
-from typing import Generator
 import re
+from typing import Generator
 
 ALL_LEVELS = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
 
@@ -39,6 +38,7 @@ def check_logs(file_path: str) -> None:
         stats[path][level] += 1
     return stats
 
+
 def combine_data(stats: list[dict]) -> dict:
     """Combine data from all files"""
     finally_stats = {}
@@ -53,11 +53,13 @@ def combine_data(stats: list[dict]) -> dict:
                 finally_stats[path][level] += count
     return finally_stats
 
+
 def print_stats(stats: dict) -> None:
     """Print stats"""
     print("HANDLERS".ljust(30), "\t".join(ALL_LEVELS))
-    for stats, value in stats.items():
-        print(f"{stats}: {value}")
+    for handler in sorted(stats.keys()):
+        print(handler.ljust(30)) # TODO: add logic to print statistics
+
 
 def get_handler_stats(files: list[str]) -> None:
     """Get stats for all files with multiprocessing"""
@@ -71,5 +73,3 @@ def get_handler_stats(files: list[str]) -> None:
 
     # Print stats
     print_stats(stats=finally_stats)
-
-
