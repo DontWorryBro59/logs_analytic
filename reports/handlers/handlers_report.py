@@ -18,6 +18,7 @@ def check_logs(file_path: str) -> None:
         r'(?P<level>DEBUG|INFO|WARNING|ERROR|CRITICAL) .*?: .*?(?P<path>/[^\s\[]+)'
     )
 
+    stats = {}
     # Read file line by line
     for log in read_file(file_path):
         # Check if line is empty or not contains django.request
@@ -27,7 +28,14 @@ def check_logs(file_path: str) -> None:
         match = pattern.match(log)
         level = match.group('level')
         path = match.group('path')
-        print(f"Level: {level} | Path: {path}")
+
+        if path not in stats:
+            stats[path] = {}
+        if level not in stats[path]:
+            stats[path][level] = 0
+        stats[path][level] += 1
+
+    print(stats)
 
 
 def get_handler_stats(files: list[str]) -> None:
