@@ -28,19 +28,41 @@ def check_logs(file_path: str) -> None:
         match = pattern.match(log)
         level = match.group('level')
         path = match.group('path')
-
+        # Check if path is in stats
         if path not in stats:
             stats[path] = {}
+        # Check if level is in stats
         if level not in stats[path]:
             stats[path][level] = 0
         stats[path][level] += 1
+    return stats
 
-    print(stats)
+def combine_data(stats: list[dict]) -> dict:
+    """Combine data from all files"""
+    all_levels = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
+    finally_stats = {}
+
+    for stat in stats:
+        for path, levels in stat.items():
+            if path not in finally_stats:
+                # Init all levels for path
+                finally_stats[path] = {level: 0 for level in all_levels}
+            for level, count in levels.items():
+                # Check if level is in
+                finally_stats[path][level] += count
+    return finally_stats
 
 
 def get_handler_stats(files: list[str]) -> None:
     """Get stats for all files with multiprocessing"""
+    all_stats = []
     for file in files:
         print(f"Start read file {file}")
-        check_logs(file_path=file)
+        all_stats.append(check_logs(file_path=file))
+
+    # Combine files data
+    finally_stats = combine_data(stats=all_stats)
+
+    print(finally_stats)
+
 
