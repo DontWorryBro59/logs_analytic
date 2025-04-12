@@ -1,11 +1,11 @@
 from core.console_parser import parse_args, check_paths_exist
+from reports.handlers.handlers_report import get_handler_stats
 
 
 def get_report(report_name: str, paths: list[str]) -> None:
     """Function to get report"""
     if report_name == "handlers":
-        # TODO: implement get_handlers_report
-        print(f"Report name: {report_name}, paths: {paths}")
+        get_handler_stats(paths)
     else:
         print(f"Report name not found, your choice is: {report_name}")
 
@@ -20,7 +20,7 @@ def main() -> None:
         print("[Error!]: no correct paths !")
         return
     # get report
-    get_report(args.report, correct_paths)
+    get_report(report_name=args.report, paths=correct_paths)
 
 
 if __name__ == '__main__':
