@@ -2,6 +2,8 @@ from multiprocessing import Pool
 from typing import Generator
 import re
 
+ALL_LEVELS = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
+
 
 def read_file(file_path: str) -> Generator[str, None, None]:
     """Lazy read file"""
@@ -39,19 +41,23 @@ def check_logs(file_path: str) -> None:
 
 def combine_data(stats: list[dict]) -> dict:
     """Combine data from all files"""
-    all_levels = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
     finally_stats = {}
 
     for stat in stats:
         for path, levels in stat.items():
             if path not in finally_stats:
                 # Init all levels for path
-                finally_stats[path] = {level: 0 for level in all_levels}
+                finally_stats[path] = {level: 0 for level in ALL_LEVELS}
             for level, count in levels.items():
                 # Check if level is in
                 finally_stats[path][level] += count
     return finally_stats
 
+def print_stats(stats: dict) -> None:
+    """Print stats"""
+    print("HANDLERS".ljust(30), "\t".join(ALL_LEVELS))
+    for stats, value in stats.items():
+        print(f"{stats}: {value}")
 
 def get_handler_stats(files: list[str]) -> None:
     """Get stats for all files with multiprocessing"""
@@ -63,6 +69,7 @@ def get_handler_stats(files: list[str]) -> None:
     # Combine files data
     finally_stats = combine_data(stats=all_stats)
 
-    print(finally_stats)
+    # Print stats
+    print_stats(stats=finally_stats)
 
 
