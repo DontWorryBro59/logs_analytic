@@ -1,8 +1,22 @@
+import time
+
 from core.console_parser import parse_args, check_paths_exist
 from core.logger import get_logger
 from reports.handlers.handlers_report import get_handler_stats
 
 logger = get_logger("logs_analytic")
+
+
+def get_time_func(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        time_result = round(end_time - start_time, 3)
+        logger.info(f"Function {func.__name__} executed in {time_result} seconds")
+        return result
+
+    return wrapper
 
 
 def get_report(report_name: str, paths: list[str]) -> None:
@@ -14,7 +28,7 @@ def get_report(report_name: str, paths: list[str]) -> None:
     else:
         logger.error(f"Report name not found, your choice is: {report_name}")
 
-
+@get_time_func
 def main() -> None:
     """Entry point of the program"""
     # get arguments from command line
