@@ -6,6 +6,8 @@ def get_report(report_name: str, paths: list[str]) -> None:
     """Function to get report"""
     if report_name == "handlers":
         get_handler_stats(paths)
+        # This place can be changed (We can add more reports with block elif, example: elif report_name == "methods" ...
+        # And if we append more reports, we need to change reports/... example: reports/methods/methods_report.py)
     else:
         print(f"Report name not found, your choice is: {report_name}")
 
