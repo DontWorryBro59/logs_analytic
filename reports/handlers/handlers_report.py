@@ -2,7 +2,9 @@ from multiprocessing import Pool
 from typing import Generator
 
 from reports.handlers.handler_conf import config
+from core.logger import get_logger
 
+logger = get_logger('handlers_report')
 
 def read_file(file_path: str) -> Generator[str, None, None]:
     """Lazy read file (generator)"""
@@ -84,7 +86,7 @@ def get_handler_stats(files: list[str]) -> None:
     # Create a pool of workers
     with Pool() as pool:
         # Start all tasks in parallel
-        print("Starting parallel processing of files...")
+        logger.info("Starting parallel processing of files...")
         all_stats = pool.map(check_logs, files)
 
     # Combine files data

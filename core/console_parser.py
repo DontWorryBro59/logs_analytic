@@ -1,6 +1,9 @@
 import argparse
 import os
 
+from core.logger import get_logger
+
+logger = get_logger("console_parser")
 
 def parse_args() -> argparse.Namespace:
     """Function to parse arguments (CLI)"""
@@ -19,7 +22,7 @@ def check_paths_exist(paths: list[str]) -> list[str]:
         if os.path.isfile(path):
             correct_paths.append(path)
         else:
-            print(f"[Warning!]: file {path} does not exist !")
+            logger.warning(f"File {path} does not exist !")
     return correct_paths
 
 
