@@ -56,13 +56,16 @@ def combine_data(stats: list[dict]) -> dict:
 
 def print_stats(stats: dict) -> None:
     """Print stats"""
+    # Total number of logs for all handlers
+    total = {level: 0 for level in ALL_LEVELS}
     print("HANDLERS".ljust(30), "\t".join(ALL_LEVELS))
     for handler in sorted(stats.keys()):
         metrics = []
         for level in ALL_LEVELS:
+            total[level] += stats[handler][level]
             metrics.append(str(stats[handler][level]))
         print(handler.ljust(30), "\t".join(metrics))
-    # TODO: need doing TOTAL section
+    print("TOTAL".ljust(30), "\t".join([str(total[level]) for level in ALL_LEVELS]))
 
 
 def get_handler_stats(files: list[str]) -> None:
