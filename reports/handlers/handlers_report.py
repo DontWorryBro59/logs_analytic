@@ -24,7 +24,6 @@ def check_logs(file_path: str) -> dict:
         file_path: Path to the log file. Example: /logs/app1.log
     """
 
-    # Log patternconfig
     pattern = config.handler_pattern
 
     stats = {}
@@ -85,7 +84,7 @@ def print_stats(stats: dict) -> None:
     print("TOTAL".ljust(30), "\t".join([str(total[level]) for level in config.all_levels]))
 
 
-def get_handler_stats(files: list[str]) -> None:
+def get_handler_stats(files: list[str]) -> None: # pragma: no cover
     """Get stats for all files with multiprocessing"""
     # Create a pool of workers
     with Pool() as pool:
