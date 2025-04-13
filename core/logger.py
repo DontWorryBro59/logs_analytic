@@ -8,9 +8,5 @@ logging.basicConfig(
     ]
 )
 
-# Готовый к использованию логгер
-logger = logging.getLogger(__name__)
-
-
 def get_logger(name):
     return logging.getLogger(name)
