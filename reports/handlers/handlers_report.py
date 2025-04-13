@@ -1,17 +1,23 @@
+from multiprocessing import Pool
 from typing import Generator
 
 from reports.handlers.handler_conf import config
 
 
 def read_file(file_path: str) -> Generator[str, None, None]:
-    """Lazy read file"""
+    """Lazy read file (generator)"""
     with open(file_path, 'r', encoding='utf-8') as file:
         for line in file:
             yield line
 
 
-def check_logs(file_path: str) -> None:
-    """This function is used to check logs"""
+def check_logs(file_path: str) -> dict:
+    """Analyzes log file and extracts statistics for django.request paths.
+
+    Args:
+        file_path: Path to the log file. Example: /logs/app1.log
+    """
+
     # Log patternconfig
     pattern = config.handler_pattern
 
@@ -39,21 +45,28 @@ def check_logs(file_path: str) -> None:
 
 def combine_data(stats: list[dict]) -> dict:
     """Combine data from all files"""
-    finally_stats = {}
+    final_stats = {}
 
     for stat in stats:
         for path, levels in stat.items():
-            if path not in finally_stats:
+            if path not in final_stats:
                 # Init all levels for path
-                finally_stats[path] = {level: 0 for level in config.all_levels}
+                final_stats[path] = {level: 0 for level in config.all_levels}
             for level, count in levels.items():
                 # Check if level is in
-                finally_stats[path][level] += count
-    return finally_stats
+                final_stats[path][level] += count
+    return final_stats
 
 
 def print_stats(stats: dict) -> None:
-    """Print stats"""
+    """Print stats.
+
+    Example:
+        HANDLERS                       DEBUG    INFO    WARNING ERROR   CRITICAL
+        /admin/dashboard/              0        13      0       4       0
+        ...
+        TOTAL                          0        148     0       40      0
+    """
     # Total number of logs for all handlers
     total = {level: 0 for level in config.all_levels}
     print("HANDLERS".ljust(30), "\t".join(config.all_levels))
@@ -66,9 +79,6 @@ def print_stats(stats: dict) -> None:
     print("TOTAL".ljust(30), "\t".join([str(total[level]) for level in config.all_levels]))
 
 
-from multiprocessing import Pool
-
-
 def get_handler_stats(files: list[str]) -> None:
     """Get stats for all files with multiprocessing"""
     # Create a pool of workers
@@ -78,7 +88,7 @@ def get_handler_stats(files: list[str]) -> None:
         all_stats = pool.map(check_logs, files)
 
     # Combine files data
-    finally_stats = combine_data(stats=all_stats)
+    final_stats = combine_data(stats=all_stats)
 
     # Print stats
-    print_stats(stats=finally_stats)
+    print_stats(stats=final_stats)
