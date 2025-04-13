@@ -68,12 +68,16 @@ def print_stats(stats: dict) -> None:
     print("TOTAL".ljust(30), "\t".join([str(total[level]) for level in ALL_LEVELS]))
 
 
+from multiprocessing import Pool
+
+
 def get_handler_stats(files: list[str]) -> None:
     """Get stats for all files with multiprocessing"""
-    all_stats = []
-    for file in files:
-        print(f"Start read file {file}")
-        all_stats.append(check_logs(file_path=file))
+    # Create a pool of workers
+    with Pool() as pool:
+        # Start all tasks in parallel
+        print("Starting parallel processing of files...")
+        all_stats = pool.map(check_logs, files)
 
     # Combine files data
     finally_stats = combine_data(stats=all_stats)
