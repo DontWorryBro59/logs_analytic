@@ -8,9 +8,13 @@ logger = get_logger('handlers_report')
 
 def read_file(file_path: str) -> Generator[str, None, None]:
     """Lazy read file (generator)"""
-    with open(file_path, 'r', encoding='utf-8') as file:
-        for line in file:
-            yield line
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            for line in file:
+                yield line
+    except FileNotFoundError:
+        logger.error("File not found: %s", file_path)
+        return
 
 
 def check_logs(file_path: str) -> dict:
