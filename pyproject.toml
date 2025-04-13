@@ -1,0 +1,17 @@
+[project]
+name = "logs-analytic"
+version = "0.1.0"
+description = "LogAnalyzer - A Django log analysis tool that parses application logs, groups errors by URL paths and log levels (DEBUG, INFO, WARNING, ERROR, CRITICAL), and provides summary statistics."
+authors = [
+    {name = "Pertsev Sergey",email = "pertsev.sergey59@yandex.ru"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pytest (>=8.3.5,<9.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
