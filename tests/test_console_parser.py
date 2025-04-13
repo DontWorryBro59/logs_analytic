@@ -17,10 +17,10 @@ def test_check_paths_exist() -> None:
     assert check_paths_exist(["logs_analytic.py"]) == ['logs_analytic.py']
     assert check_paths_exist(["test", "test1.log", "logs_analytic.py", "logs_analytic"]) == ['logs_analytic.py']
     assert check_paths_exist([]) == []
-    assert check_paths_exist([1]) == []
+    assert check_paths_exist([0,]) == []
 
 
-def test_parse_args_with_correct_paths_and_report():
+def test_parse_args_with_correct_paths_and_report() -> None:
     """Test CLI with correct paths and report"""
 
     original_argv = sys.argv
@@ -41,7 +41,7 @@ def test_parse_args_with_correct_paths_and_report():
         assert args.report == "handlers"
 
 
-def test_parse_args_with_wrong_paths_and_correct_report():
+def test_parse_args_with_wrong_paths_and_correct_report() -> None:
     """Test CLI with correct paths and wrong report"""
 
     original_argv = sys.argv
@@ -63,7 +63,7 @@ def test_parse_args_with_wrong_paths_and_correct_report():
         assert exif.value.code == 2
 
 
-def test_parse_args_with_correct_paths_and_wrong_report():
+def test_parse_args_with_correct_paths_and_wrong_report() -> None:
     """Test CLI with correct paths and wrong report"""
 
     original_argv = sys.argv
