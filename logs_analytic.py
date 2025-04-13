@@ -1,6 +1,6 @@
 from core.console_parser import parse_args, check_paths_exist
-from reports.handlers.handlers_report import get_handler_stats
 from core.logger import get_logger
+from reports.handlers.handlers_report import get_handler_stats
 
 logger = get_logger("logs_analytic")
 
