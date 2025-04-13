@@ -1,7 +1,8 @@
-<div style="text-align: center">
-  <img src="docs/logo.png" alt="Logs analytic" style="width: 400px"/>
-</div>
-<h1 style="text-align: center">Logs analytic</h1>
+<p align="center">
+  <img src="docs/logo.png" alt="Logs analytic" width="350"/>
+</p>
+
+<h1 align="center">Logs analytic</h1>
 
 ## Содержание
 
