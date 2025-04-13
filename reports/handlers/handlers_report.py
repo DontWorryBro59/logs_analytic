@@ -23,6 +23,8 @@ def check_logs(file_path: str) -> None:
             continue
 
         match = pattern.match(log)
+        if not match:
+            continue
         level = match.group('level')
         path = match.group('path')
         # Check if path is in stats
