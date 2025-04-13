@@ -15,3 +15,5 @@ class HandlerConf:
             r'(?P<level>DEBUG|INFO|WARNING|ERROR|CRITICAL) .*?: .*?(?P<path>/[^\s\[]+)'
         )
         return handler_pattern
+
+config = HandlerConf()

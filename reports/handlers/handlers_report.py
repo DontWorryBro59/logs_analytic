@@ -1,6 +1,6 @@
 from typing import Generator
 
-from reports.handlers.handler_conf import HandlerConf
+from reports.handlers.handler_conf import config
 
 
 def read_file(file_path: str) -> Generator[str, None, None]:
@@ -12,8 +12,8 @@ def read_file(file_path: str) -> Generator[str, None, None]:
 
 def check_logs(file_path: str) -> None:
     """This function is used to check logs"""
-    # Log pattern
-    pattern = HandlerConf.handler_pattern
+    # Log patternconfig
+    pattern = config.handler_pattern
 
     stats = {}
     # Read file line by line
@@ -45,7 +45,7 @@ def combine_data(stats: list[dict]) -> dict:
         for path, levels in stat.items():
             if path not in finally_stats:
                 # Init all levels for path
-                finally_stats[path] = {level: 0 for level in HandlerConf.all_levels}
+                finally_stats[path] = {level: 0 for level in config.all_levels}
             for level, count in levels.items():
                 # Check if level is in
                 finally_stats[path][level] += count
@@ -55,15 +55,15 @@ def combine_data(stats: list[dict]) -> dict:
 def print_stats(stats: dict) -> None:
     """Print stats"""
     # Total number of logs for all handlers
-    total = {level: 0 for level in HandlerConf.all_levels}
-    print("HANDLERS".ljust(30), "\t".join(HandlerConf.all_levels))
+    total = {level: 0 for level in config.all_levels}
+    print("HANDLERS".ljust(30), "\t".join(config.all_levels))
     for handler in sorted(stats.keys()):
         metrics = []
-        for level in HandlerConf.all_levels:
+        for level in config.all_levels:
             total[level] += stats[handler][level]
             metrics.append(str(stats[handler][level]))
         print(handler.ljust(30), "\t".join(metrics))
-    print("TOTAL".ljust(30), "\t".join([str(total[level]) for level in HandlerConf.all_levels]))
+    print("TOTAL".ljust(30), "\t".join([str(total[level]) for level in config.all_levels]))
 
 
 from multiprocessing import Pool
