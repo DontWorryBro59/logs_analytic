@@ -3,11 +3,12 @@ import os
 
 
 def parse_args() -> argparse.Namespace:
-    """Function to parse arguments"""
+    """Function to parse arguments (CLI)"""
+    available_reports = get_list_folder_in_reports()
     parser = argparse.ArgumentParser(description="Logs Analytic utils")
     parser.add_argument('log_paths', nargs='+', help="List of logs paths, example: logs/test.log")
-    parser.add_argument('--report', choices=get_list_folder_in_reports(),
-                        help=f"Report name, available reports are: {get_list_folder_in_reports()}")
+    parser.add_argument('--report', choices=available_reports,
+                        help=f"Report name, available reports are: {available_reports}")
     return parser.parse_args()
 
 
