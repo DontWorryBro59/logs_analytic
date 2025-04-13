@@ -41,6 +41,10 @@ API-эндпоинтам. Основные функции включают:
 - **pytest** — для тестирования кода.
 - **pytest-cov** — для получения статистики по тестам
 
+## Зависимости
+
+<img src="docs/dependencies.png" alt="Dependencies pic"/>
+
 ## Структура проекта
 
 ```bash
@@ -78,20 +82,20 @@ python logs_analytic.py tests/logs/big1.log tests/logs/big2.log --report handler
 
 ### Пример использования приложения на тестовых лог-файлах
 
-<img src="docs/example.png" alt="Logs analytic"/>
+<img src="docs/example.png" alt="base example"/>
 
 ### Пример использования приложения на одном большом файле (больше 5 000 000 строк)
 
-<img src="docs/example_with_one_big.png" alt="Logs analytic"/>
+<img src="docs/example_with_one_big.png" alt="big file example"/>
 
 ### Пример использования приложения на двух больших файлах (больше 10 000 000 строк)
 
-<img src="docs/example_with_two_big.png" alt="Logs analytic"/>
+<img src="docs/example_with_two_big.png" alt="two big file example"/>
 
 ## Unit-тесты всех функций/методов
 
-<img src="docs/pytest.png" alt="Logs analytic"/>
+<img src="docs/pytest.png" alt="Unit tests"/>
 
 ## Pytest-cov статистика
 
-<img src="docs/pytest-cov.png" alt="Logs analytic"/>
+<img src="docs/pytest-cov.png" alt="Pytest-cov statistics"/>
