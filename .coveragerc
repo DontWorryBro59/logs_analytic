@@ -11,4 +11,4 @@ omit =
     */tests/*
     */venv/*
     */.*
-    logs_analytic.py #main file
+    logs_analytic.py
