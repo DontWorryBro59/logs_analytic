@@ -1,0 +1,14 @@
+[run]
+source =
+    .
+    core
+    logs
+    reports
+    reports/handlers/handler_conf.py
+    reports/handlers/handlers_report.py
+omit =
+    */__init__.py
+    */tests/*
+    */venv/*
+    */.*
+    logs_analytic.py #main file
